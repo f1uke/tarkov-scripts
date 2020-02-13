@@ -10,9 +10,9 @@ const targetItem = {
   id: '5c94bbff86f7747ee735c08f',
 };
 // https://tarkov-market.ru/en/item/terragroup_labs_access_keycard
-const buyBelowPrice = 150000;
-const sellAtPrice = 170000;
-const amountBeforeSell = 20;
+const buyBelowPrice = 155000;
+const sellAtPrice = 161111;
+const amountBeforeSell = 3;
 
 /*
 Warning: I wrote this after I got banned so I'm unable to test if this works, use at your own risk
@@ -61,7 +61,7 @@ export default async function sellForMore(argv: ParsedArgs) {
       }
       
       const filteredResults = searchResults.offers
-        .filter((offer) => offer.requirementsCost < buyBelowPrice);
+        .filter((offer) => offer.requirementsCost <= buyBelowPrice);
 
       if (!filteredResults.length) {
         ora('Nothing found').warn();

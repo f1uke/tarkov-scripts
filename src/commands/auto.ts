@@ -325,7 +325,7 @@ export default async function auto(argv: ParsedArgs) {
             ora(error.message).fail();
           }
         }), Promise.resolve());
-        await sleep(5000);
+        // await sleep(5000);
         let balance = 0;
         let profile = await getMainProfile();
 
@@ -335,9 +335,9 @@ export default async function auto(argv: ParsedArgs) {
         }
         ora('balance = ' + balance).succeed();
       }), Promise.resolve());
-      await sleep(5000);
+      // await sleep(5000);
     }), Promise.resolve());
-    await sleep(30000);
+    // await sleep(30000);
     
     if (count >= 100) {
       ora('sleep').fail();
