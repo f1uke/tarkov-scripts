@@ -3,6 +3,7 @@ import { ensureAuthenticated } from '../utils';
 import { getMainProfile } from '../profile';
 import { searchMarket, buyOnMarket, sellOnMarket } from '../market';
 import { SortType, SortDirection, CurrencyType, OwnerType } from '../types/market';
+import ora = require('ora');
 
 const targetItem = {
   name: 'TerraGroup Labs access keycard',
@@ -59,7 +60,7 @@ export default async function sellForMore(argv: ParsedArgs) {
         .filter((offer) => offer.requirementsCost < buyBelowPrice);
 
       if (!filteredResults.length) {
-        console.log('Nothing found');
+        ora('Nothing found').warn();
         return loop();
       }
 
@@ -69,12 +70,18 @@ export default async function sellForMore(argv: ParsedArgs) {
         try {
           await buyOnMarket(offer);
 
-          console.log('Buy successful');
+          ora('Buy successful').succeed();
         } catch (error) {
-          console.log('Buy failed', error);
+          ora('Buy failed').fail();
         }
       }), Promise.resolve());
     }
     return loop();
   })();
 }
+
+function sleep(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+} 
