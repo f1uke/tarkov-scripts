@@ -11,7 +11,7 @@ const targetItem = {
 };
 // https://tarkov-market.ru/en/item/terragroup_labs_access_keycard
 const buyBelowPrice = 150000;
-const sellAtPrice = 160000;
+const sellAtPrice = 170000;
 const amountBeforeSell = 10;
 
 /*
