@@ -219,6 +219,7 @@ const categories = [
 export default async function auto(argv: ParsedArgs) {
   await ensureAuthenticated();
   const locale = await getLocale();
+  let count = 0;
 
   const userInput = await prompt([{
     type: 'checkbox',
@@ -256,7 +257,7 @@ export default async function auto(argv: ParsedArgs) {
         const searchingSpinner = ora(`Searching ${category.name} (${page === 1 ? 'Cheapest' : 'Newest'})`).start();
         const searchResults = await searchMarket({
           page: 1,
-          limit: 100,
+          limit: 30,
           sortType: page === 1 ? SortType.Price : SortType.Expiration,
           sortDirection: page === 1 ? SortDirection.ASC : SortDirection.DESC,
           currency: CurrencyType.Rouble,
@@ -318,12 +319,13 @@ export default async function auto(argv: ParsedArgs) {
 
             profitTotal += offer.profit;
             ora(`${profitTotal} total profit this session`).succeed();
+            console.log('=============================================')
           } catch (error) {
             sellingSpinner.fail();
             ora(error.message).fail();
           }
         }), Promise.resolve());
-        await sleep(10000);
+        await sleep(5000);
         let balance = 0;
         let profile = await getMainProfile();
 
@@ -333,9 +335,17 @@ export default async function auto(argv: ParsedArgs) {
         }
         ora('balance = ' + balance).succeed();
       }), Promise.resolve());
-      await sleep(10000);
+      await sleep(5000);
     }), Promise.resolve());
-    await sleep(60000);
+    await sleep(30000);
+    
+    if (count >= 100) {
+      ora('sleep').fail();
+      await sleep(60*60*1000);
+      count = 0;
+    } else count++;
+    ora('count = ' + count).warn();
+
     return loop();
   })();
 }
