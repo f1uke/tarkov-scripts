@@ -56,7 +56,12 @@ export default async function sellForMore(argv: ParsedArgs) {
         handbookId: targetItem.id,
       });
 
-      console.log(searchResults.offers[0].requirementsCost)
+        let i = 0;
+        for (let val of searchResults.offers) {
+          if (i >= 10) break
+          console.log(`${i++} = ` + val.requirementsCost)
+        }
+      
       const filteredResults = searchResults.offers
         .filter((offer) => offer.requirementsCost < buyBelowPrice);
 
