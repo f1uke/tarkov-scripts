@@ -12,7 +12,7 @@ const targetItem = {
 // https://tarkov-market.ru/en/item/terragroup_labs_access_keycard
 const buyBelowPrice = 150000;
 const sellAtPrice = 170000;
-const amountBeforeSell = 10;
+const amountBeforeSell = 20;
 
 /*
 Warning: I wrote this after I got banned so I'm unable to test if this works, use at your own risk
@@ -27,7 +27,7 @@ export default async function sellForMore(argv: ParsedArgs) {
     // Check if Offer slots are full
     if (profile.RagfairInfo.offers.length >= 3) {
       console.log('Offer slots full');
-      return;
+      return loop();
     }
 
     const targetItemsInInventory = profile.Inventory.items
