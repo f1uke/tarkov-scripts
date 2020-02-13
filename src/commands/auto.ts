@@ -243,7 +243,7 @@ export default async function auto(argv: ParsedArgs) {
     type: 'number',
     name: 'maximumProfit',
     message: 'Maximum profit to auto sell? (0 = always)',
-    default: 80000,
+    default: 100000,
     validate: function(answer) {
       if (isNaN(answer)) return 'Must be a number';
 
@@ -257,7 +257,7 @@ export default async function auto(argv: ParsedArgs) {
         const searchingSpinner = ora(`Searching ${category.name} (${page === 1 ? 'Cheapest' : 'Newest'})`).start();
         const searchResults = await searchMarket({
           page: 1,
-          limit: 30,
+          limit: 100,
           sortType: page === 1 ? SortType.Price : SortType.Expiration,
           sortDirection: page === 1 ? SortDirection.ASC : SortDirection.DESC,
           currency: CurrencyType.Rouble,
