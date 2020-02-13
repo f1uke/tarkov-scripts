@@ -46,8 +46,6 @@ export async function request(options: OptionsWithUrl, auth: boolean = true): Pr
   return response;
 }
 
-let requestId = 1;
-
 export function clientRequest(options: OptionsWithUrl, auth: boolean = true) {
   
   return request(defaultsDeep({}, options, {
@@ -57,7 +55,6 @@ export function clientRequest(options: OptionsWithUrl, auth: boolean = true) {
       'Content-Type': 'application/json',
       'GClient-RequestId': 	integer++,
       'X-Unity-Version': UNITY_VERSION,
-      'GClient-RequestId': requestId++,
     },
   }), auth);
   
