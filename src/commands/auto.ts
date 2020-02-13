@@ -9,7 +9,8 @@ import { SortType, SortDirection, CurrencyType, OwnerType } from '../types/marke
 import { ensureAuthenticated } from '../utils';
 import { getLocale } from '../static';
 import { InvetoryItem } from '../types/profile';
-import { TRADERS } from '../constants';
+import { TRADERS, ITEMS } from '../constants';
+import { getMainProfile } from '../profile';
 
 let profitTotal = 0;
 
@@ -241,7 +242,7 @@ export default async function auto(argv: ParsedArgs) {
     type: 'number',
     name: 'maximumProfit',
     message: 'Maximum profit to auto sell? (0 = always)',
-    default: 10000,
+    default: 80000,
     validate: function(answer) {
       if (isNaN(answer)) return 'Must be a number';
 
@@ -322,8 +323,25 @@ export default async function auto(argv: ParsedArgs) {
             ora(error.message).fail();
           }
         }), Promise.resolve());
+        await sleep(10000);
+        let balance = 0;
+        let profile = await getMainProfile();
+
+        const moneyStack = profile.Inventory.items.filter(item => item._tpl == ITEMS.roubles);
+        for(let val of moneyStack) {
+          balance += val.upd.StackObjectsCount
+        }
+        ora('balance = ' + balance).succeed();
       }), Promise.resolve());
+      await sleep(10000);
     }), Promise.resolve());
+    await sleep(60000);
     return loop();
   })();
 }
+
+function sleep(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+} 

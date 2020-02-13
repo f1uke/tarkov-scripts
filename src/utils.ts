@@ -123,9 +123,9 @@ export async function throttle() {
 
 (function work() {
   if (!queue.length) return setTimeout(work, 1000);
-  const waitTime = random(3000, 5000);
+  const waitTime = random(5000, 10000);
 
-  if ((Date.now() - lastWork) > 3000) {
+  if ((Date.now() - lastWork) > 5000) {
     queue.shift()();
     lastWork = Date.now();
     setTimeout(work, waitTime);
