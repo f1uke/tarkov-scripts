@@ -7,7 +7,7 @@ import { ApiResponse, KeepAliveResponse } from '../types/api';
 import { ApiError, EnterCaptchaError, NewHardwareError, WrongCredentialsError, WrongActivationCodeError, NotAuthorizedError, BadAccountIdError } from '../errors';
 import { PROD_ENDPOINT, TRADING_ENDPOINT, RAGFAIR_ENDPOINT, UNITY_VERSION, GAME_VERSION } from '../constants';
 
-let integer = 1000;
+let integer = 1;
 
 export async function request(options: OptionsWithUrl, auth: boolean = true): Promise<ApiResponse> {
   let session;
@@ -47,16 +47,13 @@ export async function request(options: OptionsWithUrl, auth: boolean = true): Pr
 }
 
 export function clientRequest(options: OptionsWithUrl, auth: boolean = true) {
-
-  integer++;
   
   return request(defaultsDeep({}, options, {
     headers: {
       'User-Agent': `UnityPlayer/${UNITY_VERSION} (UnityWebRequest/1.0, libcurl/7.52.0-DEV)`,
       'App-Version': `EFT Client ${GAME_VERSION}`,
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'GClient-RequestId': 	integer,
+      'GClient-RequestId': 	integer++,
       'X-Unity-Version': UNITY_VERSION,
     },
   }), auth);
