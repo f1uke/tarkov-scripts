@@ -9,6 +9,7 @@ const targetItem = {
   name: 'TerraGroup Labs access keycard',
   id: '5c94bbff86f7747ee735c08f',
 };
+// https://tarkov-market.ru/en/item/terragroup_labs_access_keycard
 const buyBelowPrice = 150000;
 const sellAtPrice = 160000;
 const amountBeforeSell = 10;
