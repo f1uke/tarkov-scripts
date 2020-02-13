@@ -5,12 +5,12 @@ import { searchMarket, buyOnMarket, sellOnMarket } from '../market';
 import { SortType, SortDirection, CurrencyType, OwnerType } from '../types/market';
 
 const targetItem = {
-  name: 'Labs key',
-  id: 'labskeyidhere',
+  name: 'TerraGroup Labs access keycard',
+  id: '5c94bbff86f7747ee735c08f',
 };
 const buyBelowPrice = 150000;
-const sellAtPrice = 200000;
-const amountBeforeSell = 20;
+const sellAtPrice = 160000;
+const amountBeforeSell = 10;
 
 /*
 Warning: I wrote this after I got banned so I'm unable to test if this works, use at your own risk
@@ -54,12 +54,13 @@ export default async function sellForMore(argv: ParsedArgs) {
         handbookId: targetItem.id,
       });
 
+      console.log(searchResults.offers[0].requirementsCost)
       const filteredResults = searchResults.offers
         .filter((offer) => offer.requirementsCost < buyBelowPrice);
 
       if (!filteredResults.length) {
         console.log('Nothing found');
-        return;
+        return loop();
       }
 
       console.log(`Found ${filteredResults.length}`);
